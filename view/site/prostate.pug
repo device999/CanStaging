@@ -1,0 +1,314 @@
+doctype
+html
+head
+   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+   script(src='https://cdn.jsdelivr.net/bootbox/4.4.0/bootbox.min.js')
+   script(src='../public/jquery/prostate.js')
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+   link(rel='stylesheet',href='../public/stylesheet/style.css')
+   title Staging Tool- Prostate
+body
+   if(isAuthenticated)
+     script.
+         function about_info() {
+            bootbox.alert({
+               className: "aboutClass",
+               closeButton: false,
+               message: "<div id = \'about\'> <b>#{ __("COPYRIGHT") }</b> <p> #{ __("This product is protected by copyright. Except as specifically permitted, no portion of this tool may be distributed or reproduced by any means, or in any form, without the NICR's prior written permission.")}</p> <p>#{ __("COPYRIGHT") } © #{ __("The Queen's University of Belfast, 2013 - Northern Ireland Cancer Registry, The Queen's University of Belfast, nicr@qub.ac.uk. All rights reserved.") }<br></p> <b>#{ __("WARRANTIES, DISCLAIMERS AND LIABILITY LIMITATIONS") }</b><p> #{ __('THIS TOOL IS PROVIDED "AS IS" WITHOUT WARRANTY OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.') }</p><p>#{ __("THE NICR ASSUMES NO RESPONSIBILITY FOR ERRORS OR OMISSIONS IN THIS TOOL.") }</p> <p>#{ __("IN NO EVENT SHALL THE NICR BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER (INCLUDING WITHOUT LIMITATION, THOSE RESULTING FROM: (1) RELIANCE ON THE MATERIALS PRESENTED, (2) COSTS OF REPLACEMENT GOODS, (3) LOSS OF USE, DATA OR PROFITS, (4) DELAYS OR BUSINESS INTERRUPTIONS, (5) AND ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF INFORMATION) WHETHER OR NOT THE NICR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.") }</p> <p>#{ __("THIS TOOL COULD INCLUDE TECHNICAL OR OTHER INACCURACIES. HOWEVER, THE NICR MAKES NO COMMITMENT TO PROVIDE UPDATES.")}</p> </div>"});}
+         function help_info() {
+            bootbox.alert({
+                 closeButton: false,
+                 message: "<b>#{ __('Help') }</b><br> #{ __('CanStaging - the Cancer Staging Tool calculates TNM, Stage, Grade, and other site-specific stage scores from raw information entered by the user.') } <br>#{ __('Please') } <a href=\"/public/StagingToolHelp.pdf\" target=\"new\">#{ __('Download a PDF guide') }</a> #{ __('with more information') }."}); }
+     header.navbar-default.navbar-fixed-top
+         .container
+           nav(role='navigation')
+                .navbar-header
+                  button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                  a.navbar-brand(href='/site') CanStaging
+                #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                  ul.nav.navbar-nav
+                    li
+                      a(href='/site') #{ __('Home') }
+                    li.dropdown
+                      a.dropdown-toogle(href='#',data-toggle='dropdown')  #{ __('Sites') }
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a#breast1(href='/site/breast') #{ __('Breast') }
+                         li
+                           a#cervix1(href='/site/cervix') #{ __('Cervix') }
+                         li
+                           a#colorectal1(href='/site/colorectal') #{ __('Colorectal') }
+                         li 
+                           a#lung1(href='/site/lung') #{ __('Lung') }
+                         li  
+                           a#prostate1(href='') #{ __('Prostate') }
+                    li
+                      a(href='#') #{ __('Upload') }
+                    li
+                      a(href='/getLog') #{ __('Get Log') }
+                  ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') ?
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a(href='#', role='button' onclick='help_info()') #{ __('Help') }
+                         li
+                           a(href='#', role='button' onclick='about_info()') #{ __('About') }
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') 
+                        span.glyphicon.glyphicon-user
+                        |  #{ __('User') }
+                        span.caret
+                      ul.dropdown-menu
+                        li
+                          a(href='/logout') #{ __('Logout') }
+     .container(style='margin-bottom: 15px;')
+        table.table-responsive
+            h1.prostate #{ __('Prostate') } 
+            form#table_form(name='table_form')
+              input(name='site', value='Prostate', hidden='true', type='hidden')
+              table#prostate_form
+                thead
+                  tr
+                    td(align='right') Tumour ID:
+                    td
+                      input(name='tumour_id', type='text', title='THIS ID SHOULD NOT BE A PERSONAL IDENTIFIER.', readonly='readonly')
+                      input(title='Auto-generate', name='auto_id', type='checkbox', checked='checked')
+                      | Auto
+                thead
+                  tr#T(onclick='hide_body("T")')
+                    th T
+                    th 
+                      p#valueT TX
+                tbody#T
+                  tr#prostate1
+                      td #{ __('Appearance') } 
+                      td
+                        select(name='data[T[apprearance]]',id='appearance')
+                          option(value='', disabled='', selected='', style='display:none;') #{ __('Please Choose') }
+                          option(value='1', title='Tumour clinically inapparent (not palpable or visible by imaging)') #{ __('Tumour clinically inapparent (not palpable or visible by imaging)') } 
+                          option(value='2', title='Tumour clinically apparent') #{ __('Tumour clinically apparent') }
+                        span(onclick='resetAp()')
+                          | Reset
+                  tr#prostate2
+                      td #{ __('Extension') }
+                      td
+                        select(name='data[T[Extension]]',  id= 'extension')
+                          option(value='', disabled='', selected='', style='display:none;') #{ __('Please Choose') }
+                          option(value='1', title='Tumour incidental histological  finding in = 5% resected tissue') #{ __('Tumour incidental histological  finding in = 5% resected tissue') }
+                          option(value='2', title='Tumour incidental histological finding  >5% resected tissue') #{ __('Tumour incidental histological finding  >5% resected tissue') }
+                          option(value='3', title='Tumour identified by needle biopsy') #{ __('Tumour identified by needle biopsy') }
+                          option(value='4', title='Tumour involves one 1/2 of one lobe or less') #{ __('Tumour involves one 1/2 of one lobe or less') }
+                          option(value='5', title='Tumour involves more than  half of one lobe') #{ __('Tumour involves more than  half of one lobe') }
+                          option(value='6', title='Tumour involves both lobes') #{ __('Tumour involves both lobes') }
+                        span(onclick='resetEx()')
+                          | Reset
+                  tr#prostate3
+                      td  #{ __('Through capsule') }
+                      td
+                        input(type='radio', name='data[T[Capsule]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Capsule]]', value='F', checked='')
+                        | No
+                  tr#prostate3
+                      td #{ __('Bladder neck (microscopic only)') }
+                      td 
+                        input(type='radio', name='data[T[Neck]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Neck]]', value='F', checked='')
+                        | No
+                  tr#prostate3
+                      td #{ __('Seminal vescicles') }
+                      td 
+                        input(type='radio', name='data[T[Vescicles]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Vescicles]]', value='F', checked='')
+                        | No
+                  tr#prostate4
+                      td #{ __('Bladder') }
+                      td 
+                        input(type='radio', name='data[T[Bladder]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Bladder]]', value='F', checked='')
+                        | No
+                  tr#prostate4
+                      td #{ __('External sphincter') }
+                      td 
+                        input(type='radio', name='data[T[Sphincter]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Sphincter]]"', value='F', checked='')
+                        | No
+                  tr#prostate4
+                      td #{ __('Rectum or levator muscles') }
+                      td 
+                        input(type='radio', name='data[T[Rectum]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Rectum]]', value='F', checked='')
+                        | No
+                  tr#prostate4
+                      td #{ __('Pelvic wall') }
+                      td 
+                        input(type='radio', name='data[T[Wall]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[T[Wall]]', value='F', checked='')
+                        | No      
+                thead
+                  tr#N(onclick='hide_body("N")')
+                    th N
+                    th 
+                      p#valueN NX
+                tbody#N
+                  tr#prostate1
+                     td  #{ __('Number of positive nodes') }
+                     td
+                        input(name='data[N[PositiveN-number]]', type='number', step='1', min='1.0', max='2.0', title='1-2',class='posnodes')
+                thead
+                  tr#M(onclick='hide_body("M")')
+                    th M
+                    th 
+                      p#valueM M0
+                tbody#M
+                  tr#prostate1
+                      td #{ __('Distant metastases') }	
+                      td
+                        select#metastas(name='data[M[M]]')
+                          option(value='1', disabled='', selected='', style='display:none;') #{ __('Please Choose') }
+                          option(value='1', title='No distant metastases') #{ __('No distant metastases') }
+                          option(value='2', title='Distant metastases') #{ __('Distant metastases') }
+                        span(onclick='resetDistantM()')
+                          | Reset
+                  tr#prostate2
+                      td #{ __('Metastases to bone') }
+                      td
+                        input(type='radio', name='data[M[Bone]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[M[Bone]]', value='F', checked='')
+                        | No
+                  tr#prostate2
+                      td #{ __('Metastases to non-regional nodes') }
+                      td
+                        input(type='radio', name='data[M[Nodes]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[M[Nodes]]', value='F', checked='')
+                        | No
+                  tr#prostate2
+                      td #{ __('Metastases to  other sites') }
+                      td
+                        input(type='radio', name='data[M[Other]]', value='T')
+                        | Yes
+                        input(type='radio', name='data[M[Other]]', value='F', checked='')
+                        | No
+                thead
+                  tr#SG(onclick='hide_body("SG")') 
+                    th SG
+                    th
+                      p#SG1
+                tbody#SG
+                  tr#prostate2
+                     td #{ __('Gleason score') }
+                     td 
+                       input#comboboxStyle(name='data[SG[Gleason-number]]', type='number', step='1', min='2.0', max='10.0', title='2-10',class='gleason')
+                  tr#prostate2
+                      td #{ __('PSA value') } 
+                      td
+                        input#comboboxStyle(name='data[SG[PSA-number]]', type='number', step='1', min='1.0', max='999.0', title='1-999', class= 'psa')
+                tbody
+                  tr#SGrange
+                    th SG range
+                    th
+                      p#SGRange
+                  tr#result
+                    th TNM
+                    th
+                      p#TNM
+                  tr#buttons
+                    td
+                    td(align='right')
+                        a(href='/getLog')
+                          input(type='button', value='Get log')
+                        input(type='button', value='Reset Form' onclick='resetForm()')
+                        input(type='button', value='Submit', onclick = 'submitForm()')
+        ul.pager
+              li.previous
+                a(href='/site/lung') #{ __("Previous") } 
+     script.
+        function hide_body(body) {$('tbody#' + body ).toggle({easing: 'swing'});}
+   else
+     script.
+        function about_info() {
+          bootbox.alert({
+               className: "aboutClass",
+               closeButton: false,
+               message: "<div id = \'about\'> <b>#{ __("COPYRIGHT") }</b> <p> #{ __("This product is protected by copyright. Except as specifically permitted, no portion of this tool may be distributed or reproduced by any means, or in any form, without the NICR's prior written permission.")}</p> <p>#{ __("COPYRIGHT") } © #{ __("The Queen's University of Belfast, 2013 - Northern Ireland Cancer Registry, The Queen's University of Belfast, nicr@qub.ac.uk. All rights reserved.") }<br></p> <b>#{ __("WARRANTIES, DISCLAIMERS AND LIABILITY LIMITATIONS") }</b><p> #{ __('THIS TOOL IS PROVIDED "AS IS" WITHOUT WARRANTY OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.') }</p><p>#{ __("THE NICR ASSUMES NO RESPONSIBILITY FOR ERRORS OR OMISSIONS IN THIS TOOL.") }</p> <p>#{ __("IN NO EVENT SHALL THE NICR BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER (INCLUDING WITHOUT LIMITATION, THOSE RESULTING FROM: (1) RELIANCE ON THE MATERIALS PRESENTED, (2) COSTS OF REPLACEMENT GOODS, (3) LOSS OF USE, DATA OR PROFITS, (4) DELAYS OR BUSINESS INTERRUPTIONS, (5) AND ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF INFORMATION) WHETHER OR NOT THE NICR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.") }</p> <p>#{ __("THIS TOOL COULD INCLUDE TECHNICAL OR OTHER INACCURACIES. HOWEVER, THE NICR MAKES NO COMMITMENT TO PROVIDE UPDATES.")}</p> </div>"});}
+        function help_info() {
+          bootbox.alert({
+               closeButton: false,
+               message: "<b>#{ __('Help') }</b><br> #{ __('CanStaging - the Cancer Staging Tool calculates TNM, Stage, Grade, and other site-specific stage scores from raw information entered by the user.') } <br>#{ __('Please') } <a href=\"/public/StagingToolHelp.pdf\" target=\"new\">#{ __('Download a PDF guide') }</a> #{ __('with more information') }."}); }
+     header.navbar-default.navbar-fixed-top
+         .container
+           nav(role='navigation')
+                .navbar-header
+                  button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                  a.navbar-brand(href='/') CanStaging
+                #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                  ul.nav.navbar-nav
+                    li
+                      a(href='/') #{ __('Home') }
+                    li.dropdown
+                      a.dropdown-toogle(href='/',data-toggle='dropdown') #{ __('Sites') }
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a#breast1(href='/site/breast') #{ __('Breast') }
+                         li
+                           a#cervix1(href='/site/cervix') #{ __('Cervix') }
+                         li
+                           a#colorectal1(href='/site/colorectal') #{ __('Colorectal') }
+                         li 
+                           a#lung1(href='/site/lung') #{ __('Lung') }
+                         li  
+                           a#prostate1(href='/site/prostate') #{ __('Prostate') }
+                    li
+                      a(href='/') #{ __('Upload') }
+                    li
+                      a(href='/') #{ __('Get Log') }
+                  ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') ?
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a(href='#', role='button' onclick='help_info()') #{ __('Help') }
+                         li
+                           a(href='#', role='button' onclick='about_info()') #{ __('About') }
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') 
+                        span.glyphicon.glyphicon-user
+                        |  #{ __('User') }
+                        span.caret
+                      ul.dropdown-menu
+                        li
+                          a(href='/') #{ __('Logout') }
+     .container(style='padding-top: 100px;')
+          form(action='', method='post')
+            label(for='username') #{ __('Username') } 
+            br
+            input(type='text', name='username') 
+            br
+            label(for='password') #{ __('Password') }
+            br
+            input(type='password', name = 'password')
+            br
+            input#loginstyle(type='submit', value='Log in')

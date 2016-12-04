@@ -1,0 +1,194 @@
+doctype 
+html
+head
+   meta(name='viewport', content='width=device-width, initial-scale=1.0')
+   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js',type='text/javascript')
+   link(rel='stylesheet', href='./public/stylesheet/welcomestyle.css')
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+   script(src='https://cdn.jsdelivr.net/bootbox/4.4.0/bootbox.min.js')
+   title #{ __('The Cancer Staging') }
+body
+   if (!isAuthenticated) 
+     script.
+        function about_info() {
+          bootbox.alert({
+               className: "aboutClass",
+               closeButton: false,
+               message: "<div id = \'about\'> <b>#{ __("COPYRIGHT") }</b> <p> #{ __("This product is protected by copyright. Except as specifically permitted, no portion of this tool may be distributed or reproduced by any means, or in any form, without the NICR's prior written permission.")}</p> <p>#{ __("COPYRIGHT") } © #{ __("The Queen's University of Belfast, 2013 - Northern Ireland Cancer Registry, The Queen's University of Belfast, nicr@qub.ac.uk. All rights reserved.") }<br></p> <b>#{ __("WARRANTIES, DISCLAIMERS AND LIABILITY LIMITATIONS") }</b><p> #{ __('THIS TOOL IS PROVIDED "AS IS" WITHOUT WARRANTY OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.') }</p><p>#{ __("THE NICR ASSUMES NO RESPONSIBILITY FOR ERRORS OR OMISSIONS IN THIS TOOL.") }</p> <p>#{ __("IN NO EVENT SHALL THE NICR BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER (INCLUDING WITHOUT LIMITATION, THOSE RESULTING FROM: (1) RELIANCE ON THE MATERIALS PRESENTED, (2) COSTS OF REPLACEMENT GOODS, (3) LOSS OF USE, DATA OR PROFITS, (4) DELAYS OR BUSINESS INTERRUPTIONS, (5) AND ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF INFORMATION) WHETHER OR NOT THE NICR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.") }</p> <p>#{ __("THIS TOOL COULD INCLUDE TECHNICAL OR OTHER INACCURACIES. HOWEVER, THE NICR MAKES NO COMMITMENT TO PROVIDE UPDATES.")}</p> </div>"});}
+        function help_info() {
+          bootbox.alert({
+               closeButton: false,
+               message: "<b>#{ __('Help') }</b><br> #{ __('CanStaging - the Cancer Staging Tool calculates TNM, Stage, Grade, and other site-specific stage scores from raw information entered by the user.') } <br>#{ __('Please') } <a href=\"/public/StagingToolHelp.pdf\" target=\"new\">#{ __('Download a PDF guide') }</a> #{ __('with more information') }."}); }
+     header.navbar-default.navbar-fixed-top
+         .container
+           nav(role='navigation')
+                .navbar-header
+                  button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                  a.navbar-brand(href='/') CanStaging
+                #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                  ul.nav.navbar-nav
+                    li
+                      a(href='/') #{ __('Home') }
+                    li.dropdown
+                      a.dropdown-toogle(href='/',data-toggle='dropdown') #{ __('Sites') }
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a#breast1(href='/site/breast') #{ __('Breast') }
+                         li
+                           a#cervix1(href='/site/cervix') #{ __('Cervix') }
+                         li
+                           a#colorectal1(href='/site/colorectal') #{ __('Colorectal') }
+                         li 
+                           a#lung1(href='/site/lung') #{ __('Lung') }
+                         li  
+                           a#prostate1(href='/site/prostate') #{ __('Prostate') }
+                    li
+                      a(href='/') #{ __('Upload') }
+                    li
+                      a(href='/') #{ __('Get Log') }
+                  ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') ?
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a(href='#', role='button' onclick='help_info()') #{ __('Help') }
+                         li
+                           a(href='#', role='button' onclick='about_info()') #{ __('About') }
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') 
+                        span.glyphicon.glyphicon-user
+                        |  #{ __('User') }
+                        span.caret
+                      ul.dropdown-menu
+                        li
+                          a(href='/') #{ __('Logout') }
+     .container(style='padding-top: 100px;')
+          form(action='', method='post')
+            label(for='username') #{ __('Username') } 
+            br
+            input(type='text', name='username') 
+            br
+            label(for='password') #{ __('Password') }
+            br
+            input(type='password', name = 'password')
+            br
+            input#loginstyle(type='submit', value='Log in')
+   else
+     script.
+        function about_info() {
+          bootbox.alert({
+               className: "aboutClass",
+               closeButton: false,
+               message: "<div id = \'about\'> <b>#{ __("COPYRIGHT") }</b> <p> #{ __("This product is protected by copyright. Except as specifically permitted, no portion of this tool may be distributed or reproduced by any means, or in any form, without the NICR's prior written permission.")}</p> <p>#{ __("COPYRIGHT") } © #{ __("The Queen's University of Belfast, 2013 - Northern Ireland Cancer Registry, The Queen's University of Belfast, nicr@qub.ac.uk. All rights reserved.") }<br></p> <b>#{ __("WARRANTIES, DISCLAIMERS AND LIABILITY LIMITATIONS") }</b><p> #{ __('THIS TOOL IS PROVIDED "AS IS" WITHOUT WARRANTY OR CONDITIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.') }</p><p>#{ __("THE NICR ASSUMES NO RESPONSIBILITY FOR ERRORS OR OMISSIONS IN THIS TOOL.") }</p> <p>#{ __("IN NO EVENT SHALL THE NICR BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER (INCLUDING WITHOUT LIMITATION, THOSE RESULTING FROM: (1) RELIANCE ON THE MATERIALS PRESENTED, (2) COSTS OF REPLACEMENT GOODS, (3) LOSS OF USE, DATA OR PROFITS, (4) DELAYS OR BUSINESS INTERRUPTIONS, (5) AND ANY THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF INFORMATION) WHETHER OR NOT THE NICR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.") }</p> <p>#{ __("THIS TOOL COULD INCLUDE TECHNICAL OR OTHER INACCURACIES. HOWEVER, THE NICR MAKES NO COMMITMENT TO PROVIDE UPDATES.")}</p> </div>"});}
+        function help_info() {
+          bootbox.alert({
+               closeButton: false,
+               message: "<b>#{ __('Help') }</b><br> #{ __('CanStaging - the Cancer Staging Tool calculates TNM, Stage, Grade, and other site-specific stage scores from raw information entered by the user.') } <br>#{ __('Please') } <a href=\"/public/StagingToolHelp.pdf\" target=\"new\">#{ __('Download a PDF guide') }</a> #{ __('with more information') }."}); }
+     header.navbar-default.navbar-fixed-top
+         .container
+           nav(role='navigation')
+                .navbar-header
+                  button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1', aria-expanded='false')
+                    span.sr-only Toggle navigation
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                  a.navbar-brand(href='') CanStaging
+                #bs-example-navbar-collapse-1.collapse.navbar-collapse
+                  ul.nav.navbar-nav
+                    li
+                      a(href='') #{ __('Home') }
+                    li.dropdown
+                      a.dropdown-toogle(href='',data-toggle='dropdown') #{ __('Sites') }
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a#breast1(href='site/breast') #{ __('Breast') }
+                         li
+                           a#cervix1(href='site/cervix') #{ __('Cervix') }
+                         li
+                           a#colorectal1(href='site/colorectal') #{ __('Colorectal') }
+                         li 
+                           a#lung1(href='site/lung') #{ __('Lung') }
+                         li  
+                           a#prostate1(href='site/prostate') #{ __('Prostate') }
+                    li
+                      a(href='#') #{ __('Upload') }
+                    li
+                      a(href='/getLog') #{ __('Get Log') }
+                  ul.nav.navbar-nav.navbar-right
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') ?
+                        span.caret
+                      ul.dropdown-menu
+                         li
+                           a(href='#', role='button' onclick='help_info()') #{ __('Help') }
+                         li
+                           a(href='#', role='button' onclick='about_info()') #{ __('About') }
+                    li.dropdown
+                      a.dropdown-toggle(href='#',data-toggle='dropdown') 
+                        span.glyphicon.glyphicon-user
+                        |  #{ __('User') }
+                        span.caret
+                      ul.dropdown-menu
+                        li
+                          a(href='/logout') #{ __('Logout') }
+     .container
+       h1.canStaging CanStaging
+       p.from #{ __('By Sattar Rahimbeyli and Matanat Ahmadova.') } 
+       hr.margin
+       p.welcome #{ __('Welcome to CanStaging, a Cancer Staging Tool. The tool will help maximise the availability, standardisation and comparability of cancer staging internationally.') }
+       hr.margin
+       h4.margin #{ __('Sites') }
+       ul.sites
+          li
+            a#breast(href='site/breast') #{ __('Breast') }
+          li
+            a#cervix(href='site/cervix') #{ __('Cervix') }
+          li
+            a#colorectal(href='site/colorectal') #{ __('Colorectal') }
+          li
+            a#lung(href='site/lung') #{ __('Lung') }
+          li
+            a#prostate(href='site/prostate') #{ __('Prostate') }
+       hr.margin
+       p.endorcedBy #{ __('Endorced by') } :
+       .imagePos
+         .row
+           .span4(align='center')
+             a(href='http://www.qub.ac.uk/research-centres/nicr/')
+               img(src='./public/images/NICR.gif', width='120', title='NICR')
+           .span4(align='center')
+             a(href='http://www.iarc.fr')
+               img.media-object(src='./public/images/logoiarc.gif', width='220', title='IARC')
+           .span4(align='center')
+             a(href='http://gicr.iarc.fr/')
+               img(src='./public/images/GICR-logo.jpg', width='140', title='GICR')
+           .span4(align='center')
+             a(href='http://www.uicc.org/')
+               img(src='./public/images/UICC.jpg', width='120', title='UICC')
+           .span4(align='center')
+             a(href='http://www.iacr.com.fr/')
+               img(src='./public/images/iacr-title.gif', width='300', title='IACR')
+       hr.margin
+       p.margin(style='font-size:12px')
+         i
+          | #{ __('Used with the permission of the Union for International Cancer Control (UICC), Geneva, Switzerland.') }  #{ __('The original source for this material is') }  
+          a(href='http://eu.wiley.com/WileyCDA/Section/id-302479.html?query=Leslie+H.+Sobin') Leslie H. Sobin
+          |  (#{ __('Editor') } ), 
+          a(href='http://eu.wiley.com/WileyCDA/Section/id-302479.html?query=Mary+K.+Gospodarowicz') Mary K. Gospodarowicz
+          |  (#{ __('Editor') } ),  
+          a(href='http://eu.wiley.com/WileyCDA/Section/id-302479.html?query=Christian+Wittekind') Christian Wittekind
+          |  (#{ __('Editor') } ), #{ __('TNM Classification of Malignant Tumours, 7th Edition, published in November 2009 by Wiley-Blackwell.') }
+          br
+          br
+          |  #{ __('This tool has been reproduced with due care') }. #{ __('Any inconsistencies with the UICC TNM classification 7th edition and published errata are unintentional. Neither NICR nor UICC carry any liability should unforeseen errors emerge.') }
+

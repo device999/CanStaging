@@ -1,0 +1,35 @@
+doctype 
+html
+head
+   title #{ __('The Cancer Staging') } 
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+   link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css', integrity='sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp', crossorigin='anonymous')
+   script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+   script(src='../public/jquery/onLoad.js')
+   script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+   script(src='https://cdn.jsdelivr.net/bootbox/4.4.0/bootbox.min.js')
+   link(rel='stylesheet',href='../public/stylesheet/style.css')
+body
+   if(isAuthenticated)
+      #log
+          h3 #{ __('CanStaging log') } 
+          table#inf
+             thead
+                tr
+                   td Tumour ID
+                   td #{ __('Date created') } 
+                   td #{ __('Site') } 
+                   td T
+                   td N
+                   td M
+                   td TNM - #{ __('Result') }  
+                   td TNM - #{ __('Message') }
+                   td SG - #{ __('Result') }
+                   td SG - #{ __('Message') }
+                   td SimpG
+                   td SG #{ __('range') }
+                   td #{ __('Site Specific') }
+          br
+          input(type='button', value='Clear Log' onclick='clearLog()')
+          br
+          input(type='button', value='Download Log' onclick ='download()')

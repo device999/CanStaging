@@ -1,0 +1,2 @@
+This project contains the stage cancer program.
+our main part is located at app.js file,there we send requests to the server and get answers.

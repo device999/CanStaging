@@ -1,0 +1,6 @@
+start:
+node app.js 
+
+login credentials: 
+username: user
+password: test 

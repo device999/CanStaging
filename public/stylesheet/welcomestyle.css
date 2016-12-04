@@ -1,0 +1,123 @@
+.aboutClass{
+    margin-top: 75px;
+}
+
+.aboutClass .modal-body {
+        height: 400px;
+        overflow-y: auto;
+}
+
+#loginstyle{
+    margin-top: 5px;
+    width: 7em;  height: 2em;
+}
+
+
+#about{
+    font-family: sans-serif;
+    font-size: 14px;
+}
+.canStaging{
+    margin-top: 70px;
+    margin-left: 15px;
+	margin-bottom: 0px;
+    color: black;
+}
+
+.from {
+    font-size: 13px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.welcome{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left:18px;
+    margin-right: 18px;
+}
+
+.margin{
+    margin-left:18px;
+    margin-right: 18px;
+}
+
+.imagePos{
+    margin-left:160px;
+    margin-right: 160px;
+}
+
+.sites{
+	list-style-type: none;
+    margin-right:0;
+    padding: 0;
+    width: 100%;
+}
+ 
+ #breast, #cervix, #colorectal, #lung, #prostate { 
+	background-color:#F27B96;
+	color:black;
+	display: block;
+	height: 30px;
+	padding-top: 6px;
+    padding-right: 12px;
+    padding-left: 12px;
+    margin-bottom: 3px;
+    margin-left:18px;
+    margin-right: 18px;
+	text-decoration: none;
+	border-radius: 5px;
+}
+
+ #cervix{
+ 	background-color:#9C6ECA;
+ }
+
+ #colorectal{
+ 	background-color:#DFB77F;
+ }
+
+ #lung{
+ 	background-color:#A2EA77;
+ }
+
+ #prostate{
+ 	background-color:#7FDFB7;
+ }
+
+ .endorcedBy{
+ 	text-align: center;
+ 	text-decoration: underline;
+ 	display: block;
+ 	color:black;
+ 	font-size: 16px;
+ 	font-family: arial;
+ 	line-height: 25px;
+ 	margin-bottom: 15px;
+ }
+
+#breast1 { 
+    color:#000000;
+    background-color:#F27B96;
+}
+
+#cervix1 { 
+    color:#000000;
+    background-color:#9C6ECA;
+}
+
+#colorectal1 { 
+    color:#000000;
+    background-color:#DFB77F;
+}
+
+#lung1 { 
+    color:#000000;
+    background-color:#A2EA77;
+}
+
+#prostate1 { 
+    color:#000000;
+    background-color:#7FDFB7;
+}
